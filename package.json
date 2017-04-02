@@ -16,7 +16,8 @@
     "express": "^4.15.2",
     "npm-watch": "^0.1.8",
     "react": "^15.4.2",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.4.2",
+    "socket.io": "^1.7.3"
   },
   "devDependencies": {
     "webpack": "^2.3.2",
