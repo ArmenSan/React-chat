@@ -8,11 +8,7 @@ class ChatRoom extends Component {
         this.submitMessage = this.submitMessage.bind(this)
         this.state = {
             message: '',
-            messages: [
-                {id:0, text:'first message'},
-                {id:1, text:'second message'},
-                {id:2, text:'third message'}
-            ]
+            messages: []
         }
     }
 
@@ -49,7 +45,7 @@ class ChatRoom extends Component {
                 <ol>
                     {currentMessage}
                 </ol>
-                This is ChatRoom component!
+                Tipe our message!
                 <br />
                 <input onChange={this.updateMessage} type="text" placeholder="message" />
                 <br />

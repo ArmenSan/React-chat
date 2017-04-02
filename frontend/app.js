@@ -8,7 +8,6 @@ class App extends Component {
     render() {
         return (
             <div>
-                it is not cool stuff yet, but it will be! 
                 <ChatRoom />
             </div>
         );
