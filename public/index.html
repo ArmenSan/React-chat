@@ -5,5 +5,20 @@
 </head>
 <body>
     <div id="app"/>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.4/firebase.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyB-FKRVPlYqxZJsXCmvk-tP-0sCwD3qTW0",
+        authDomain: "our-chat-924df.firebaseapp.com",
+        databaseURL: "https://our-chat-924df.firebaseio.com",
+        projectId: "our-chat-924df",
+        storageBucket: "our-chat-924df.appspot.com",
+        messagingSenderId: "104880460407"
+      };
+      firebase.initializeApp(config);
+    </script>
+
     <script src="bundle.js"></script>
 </body>
