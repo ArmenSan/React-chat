@@ -56,15 +56,38 @@ class ChatRoom extends Component {
                 <li key={message.id}>{message.text}</li>
             )
         })
+
+        const ourChat = {
+            textAlign:'center',
+        }
+
+        const Mess = {
+            backgroundColor: 'blue',
+            overflow: 'auto',
+            height: '380px',
+            
+        }
+
+        const buttonAndSubmit = {
+            justifyContent: 'center',
+            display: 'flex',
+        }
+
         return (
-            <div>
-                <h1>Our chat </h1>
-                <ol>
+            <div >
+                <h1 style={ourChat}><i>Our chat </i></h1>
+                <div style={Mess}>
+                    <ol>
                      {currentMessage}
-                </ol>
-                <input onChange={this.updateMessage} type='text' placeholder="Message" />
-                <br />
-                <button onClick={this.submitMessage}>Submit Message</button>
+                    </ol>
+                </div>
+
+                <div style={buttonAndSubmit}>
+                    <input onChange={this.updateMessage} type='text' placeholder="Message" />
+                </div>
+                    <div style={buttonAndSubmit}>
+                        <button onClick={this.submitMessage}>Submit Message</button>
+                    </div>
             </div>
         )
     }
