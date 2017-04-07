@@ -10,7 +10,7 @@ const watching = [
 ];
 
 watching.forEach(({service}) => {
-  const child = spawn('npm', ['run', service]);
+  const child = spawn(/^win/.test(process.platform) ? 'npm.cmd': 'npm', ['run', service]);
   child.stdout.on('data', d => console.log(d.toString()));
   child.stderr.on('data', d => console.log(d.toString()));
 });
