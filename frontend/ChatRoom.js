@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
 
 class ChatRoom extends Component {
 
@@ -6,11 +7,19 @@ class ChatRoom extends Component {
         super(props,context)
         this.updateMessage = this.updateMessage.bind(this)
         this.submitMessage = this.submitMessage.bind(this)
+        this.onRowRender = this.onRowRender.bind(this)
         this.state = {
             message: '',
             messages: []
         }
     }
+
+    onRowRender(row) {
+        var rowDOM = ReactDOM.findDOMNode(row);
+        var offsets = rowDOM.getClientRects()[0];
+        var parent = rowDOM.parentNode;
+        parent.scrollTop = offsets.top;
+  }
 
     componentDidMount(){
         console.log('ComponentDidMount')
@@ -24,7 +33,6 @@ class ChatRoom extends Component {
                 })
             }
         })
-         
     }
 
     updateMessage(event){
@@ -42,54 +50,50 @@ class ChatRoom extends Component {
         }
 
         firebase.database().ref('messages/'+nextMessage.id).set(nextMessage)
-
-        // var list = Object.assign([],this.state.messages)
-        // list.push(nextmessage)
-        // this.setState({
-        //     messages: list
-        // })
     }
 
     render() {
-        const currentMessage = this.state.messages.map((message, i) => {
-            return(
-                <li key={message.id}>{message.text}</li>
-            )
-        })
-
-        const ourChat = {
-            textAlign:'center',
-        }
-
-        const Mess = {
-            backgroundColor: 'blue',
-            overflow: 'auto',
-            height: '380px',
-            
-        }
-
-        const buttonAndSubmit = {
-            justifyContent: 'center',
-            display: 'flex',
-        }
-
+        
         return (
-            <div >
-                <h1 style={ourChat}><i>Our chat </i></h1>
-                <div style={Mess}>
-                    <ol>
-                     {currentMessage}
-                    </ol>
+             <div >
+                <h1 className="ourChat"><i>Our Chat </i></h1>
+                <div className="CurrentMessage">
+                
+                    {this.state.messages.map((message, i) => {
+        return(
+                 <Fuck 
+                    onRender={ this.onRowRender}
+                    key={message.id}
+                    text={message.text}
+                    onRender={i === this.state.messages.length - 1 ? this.onRowRender : null}
+                 />
+            );
+        })
+                    }
                 </div>
-
-                <div style={buttonAndSubmit}>
-                    <input onChange={this.updateMessage} type='text' placeholder="Message" />
-                </div>
-                    <div style={buttonAndSubmit}>
-                        <button onClick={this.submitMessage}>Submit Message</button>
+                <form onSubmit={this.submitMessage}>
+                    <div className="buttonAndSubmit">
+                        <input onChange={this.updateMessage} value={this.state.message} type='text' placeholder="Message" />
+                    </div>
+                </form>
+                    <div className="buttonAndSubmit">
+                        <button onClick={this.submitMessage} >Submit Message</button>
                     </div>
             </div>
         )
+    }
+}
+
+class Fuck extends Component {
+    componentDidMount() {
+        if (this.props.onRender) this.props.onRender(this);
+    }
+    render() {
+        return(
+            <div>
+                {this.props.text}
+                    </div>
+        );
     }
 }
 

@@ -1,0 +1,29 @@
+body {
+background-color: brown;
+}
+.ourChat {
+    text-align:center;
+}
+
+.CurrentMessage {
+    overflow: auto;
+    background-color: blue;
+    height: 380px;
+    
+}
+
+.buttonAndSubmit {
+    justify-content: center;
+    display: flex;
+}
+
+.chatBoxStyle {
+    background-color: yellow;
+    border: 1px solid black;
+    height: 500px;
+    width: 500px;
+    float: none;
+    margin: 0 auto;
+    
+}
+   
