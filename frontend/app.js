@@ -7,6 +7,7 @@ class App extends Component {
     render() {
         return (
             <div className="chatBoxStyle">
+                <h1 className="ourChat"><i>Our Chat </i></h1>
                 <ChatRoom />
             </div>
         );

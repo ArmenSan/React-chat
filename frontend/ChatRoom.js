@@ -7,22 +7,15 @@ class ChatRoom extends Component {
         super(props,context)
         this.updateMessage = this.updateMessage.bind(this)
         this.submitMessage = this.submitMessage.bind(this)
-        this.onRowRender = this.onRowRender.bind(this)
+        this.keyUpFunction = this.keyUpFunction.bind(this)
         this.state = {
             message: '',
-            messages: []
+            messages: [],
         }
     }
 
-    onRowRender(row) {
-        var rowDOM = ReactDOM.findDOMNode(row);
-        var offsets = rowDOM.getClientRects()[0];
-        var parent = rowDOM.parentNode;
-        parent.scrollTop = offsets.top;
-  }
-
     componentDidMount(){
-        console.log('ComponentDidMount')
+        console.log('ComponentDidMount');
         firebase.database().ref('messages/').on('value', (snapshot) => {
             
             const currentMessages = snapshot.val()
@@ -47,53 +40,41 @@ class ChatRoom extends Component {
         const nextMessage = {
             id: this.state.messages.length,
             text: this.state.message
-        }
-
+        };
+        this.setState({
+            message: ''
+        });
         firebase.database().ref('messages/'+nextMessage.id).set(nextMessage)
     }
 
+    keyUpFunction(event) {
+        event.preventDefault();
+        if(event.keyCode == 13) {
+            this.submitMessage(event)
+        };
+    }
+    componentDidUpdate() {
+    const panel = this.refs.chat_container;
+    if (panel.lastChild) panel.lastChild.scrollIntoView();
+  }
+
     render() {
-        
+         const currentMessage = this.state.messages.map((message, i) => {
+            return (
+                <dt key ={message.id}>{message.text}</dt>
+            )
+        })
         return (
              <div >
-                <h1 className="ourChat"><i>Our Chat </i></h1>
-                <div className="CurrentMessage">
-                
-                    {this.state.messages.map((message, i) => {
-        return(
-                 <Fuck 
-                    onRender={ this.onRowRender}
-                    key={message.id}
-                    text={message.text}
-                    onRender={i === this.state.messages.length - 1 ? this.onRowRender : null}
-                 />
-            );
-        })
-                    }
+                <div ref={'chat_container'} className="CurrentMessage">
+                    {currentMessage}
                 </div>
-                <form onSubmit={this.submitMessage}>
-                    <div className="buttonAndSubmit">
-                        <input onChange={this.updateMessage} value={this.state.message} type='text' placeholder="Message" />
-                    </div>
-                </form>
-                    <div className="buttonAndSubmit">
-                        <button onClick={this.submitMessage} >Submit Message</button>
-                    </div>
+                <div className="buttonAndSubmit">
+                    <input  onChange={this.updateMessage} onKeyUp={this.keyUpFunction} value={this.state.message} type='text' placeholder="Message" />
+                    <button  onClick={this.submitMessage} >Submit Message</button>
+                </div>
             </div>
         )
-    }
-}
-
-class Fuck extends Component {
-    componentDidMount() {
-        if (this.props.onRender) this.props.onRender(this);
-    }
-    render() {
-        return(
-            <div>
-                {this.props.text}
-                    </div>
-        );
     }
 }
 

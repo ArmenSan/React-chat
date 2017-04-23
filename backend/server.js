@@ -7,7 +7,7 @@ const server = require('http').Server(app);
 const io = require('socket.io')(server);
 
 app.use(express.static('public'));
-app.listen(5555);
+app.listen(4444);
 
 
 
